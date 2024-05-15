@@ -111,3 +111,10 @@ SELECT nome, data_nascimento from cliente where data_nascimento between '1990-01
 -- between : condição para resultado entre 2 valores
 
 SELECT nome, rg from cliente where rg is null;
+-- is null :  exibir os campos com valores nulos
+
+SELECT nome FROM cliente order by nome asc;
+-- order by xx asc : ordenar coluna em ordem crescente
+
+SELECT nome FROM cliente order by nome desc;
+-- order by xx desc : ordenar coluna em ordem decrescente
