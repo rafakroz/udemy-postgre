@@ -118,3 +118,68 @@ SELECT nome FROM cliente order by nome asc;
 
 SELECT nome FROM cliente order by nome desc;
 -- order by xx desc : ordenar coluna em ordem decrescente
+
+
+
+-- SEÇÃO 2 - AULA 14: EXERCÍCIOS CONSULTA SIMPLES ----------------------------------------------------
+
+select * from cliente;
+
+-- 1. O nome, o gênero e a profissão de todos os clientes, ordenado pelo nome em ordem decrescente.
+SELECT nome, genero, profissao from cliente order by nome desc; -- ok
+
+-- 2. Os clientes que tenham a letra “R” no nome.
+SELECT nome from cliente where nome like '%r%'; -- ok
+
+-- 3. Os clientes que o nome inicia com a letra “C”.
+SELECT nome from cliente where nome like 'C%'; -- ok
+
+-- 4. Os clientes que o nome termina com a letra “A”.
+SELECT nome from cliente where nome like '%a'; -- ok
+
+-- 5. Os clientes que moram no bairro “Centro”.
+SELECT nome, bairro from cliente where bairro like 'Centro';
+
+select nome, bairro from cliente where bairro = 'Centro' or bairro = 'Cto.' or bairro = 'Ctr.'; -- correção
+
+-- 6. Os clientes que moram em complementos que iniciam com a letra “A”.
+select nome, logradouro, numero, complemento from cliente where complemento like 'A%'; -- ok
+
+-- 7. Somente os clientes do sexo feminino.
+SELECT nome, genero from cliente where genero like 'F'; -- ok
+
+SELECT nome, genero from cliente where genero = 'F'; -- outra opção
+
+-- 8. Os clientes que não informaram o CPF.
+SELECT nome, cpf from cliente where cpf is null; -- ok
+
+-- 9. O nome e a profissão dos clientes, ordenado em ordem crescente pelo nome da profissão.
+SELECT nome, profissao from cliente order by profissao asc; -- ok
+
+-- 10. Os clientes de nacionalidade “Brasileira”.
+SELECT nome, nacionalidade from cliente where nacionalidade like 'Brasileira';
+
+SELECT nome, nacionalidade from cliente where nacionalidade like 'Brasil%'; -- correção
+
+-- 11. Os clientes que informaram o número da residência.
+select nome as "Nome", logradouro as "Endereço", numero as "N°" from cliente where numero is not null; -- ok
+
+-- 12. Os clientes que moram em Santa Catarina.
+SELECT nome as "Nome", municipio as "Cidade", uf as "UF" from cliente where uf like 'SC'; -- ok
+
+-- 13. Os clientes que nasceram entre 01/01/2000 e 01/01/2002.
+SELECT nome as "Nome", data_nascimento as "Data de Nascimento" FROM cliente where data_nascimento between '2000-01-01' and '2002-01-01'; -- ok
+
+-- 14. O nome do cliente e o logradouro, número, complemento, bairro, município e UF concatenado de todos os clientes.
+SELECT 'Nome: ' || nome || ' Endereço: ' || logradouro || ', N°: ' || numero || ' Complemento: ' || complemento
+	|| ' Bairro: ' || bairro || ' Cidade: ' || municipio || ' UF: ' || uf as "Dados do Cliente" from cliente;
+
+SELECT 'Nome: ' || COALESCE (nome, '-----') || ' Endereço: ' || COALESCE (logradouro, '-----') || ', N°: ' || COALESCE (numero, '-----') || ' Complemento: '
+	|| COALESCE (complemento, '-----') || ' Bairro: ' || COALESCE (bairro, '-----') || ' Cidade: ' || COALESCE (municipio, '-----')
+	|| ' UF: ' || COALESCE (uf, '-----') as "Dados do Cliente" from cliente;
+
+/*
+Os campos com valor null estão impactando em não exibir resultados.
+Benilson me deu a dica de usar coalesce, onde, caso o campo seja null, irá substituir pelo valor informado.
+*/
+
