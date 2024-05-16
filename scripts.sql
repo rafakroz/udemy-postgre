@@ -432,10 +432,82 @@ update cliente set idbairro = 2 where idcliente in (2, 3, 6, 8, 9);
 update cliente set idbairro = 3 where idcliente in (4, 5);
 update cliente set idbairro = 4 where idcliente = 7;
 
-select * from cliente;
-
 
 
 -- SEÇÃO 2 - AULA 23: CHAVES ESTRANGEIRAS 3 ----------------------------------------------------
 
+/*
+Haverão níveis de relacionamento:
+cliente > municipio
+municipio > uf
+*/
 
+select * from cliente;
+
+-- Criação da tabela UF
+
+create table uf (
+	iduf integer not null,
+	nome character varying (30) not null,
+	sigla character (2) not null,
+
+	constraint pk_ufd_idunidade primary key (iduf),
+	constraint uc_ufd_nome unique (nome),
+	constraint uc_ufd_sigla unique (sigla)
+);
+
+insert into uf (iduf, nome, sigla) values (1, 'Santa Catarina', 'SC');
+insert into uf (iduf, nome, sigla) values (2, 'Paraná', 'PR');
+insert into uf (iduf, nome, sigla) values (3, 'São Paulo', 'SP');
+insert into uf (iduf, nome, sigla) values (4, 'Minas Gerais', 'MG');
+insert into uf (iduf, nome, sigla) values (5, 'Rio Grande do Sul', 'RS');
+insert into uf (iduf, nome, sigla) values (6, 'Rio de Janeiro', 'RJ');
+
+select * from uf;
+
+-- Criação da tabela município
+-- Como terá a chave estrangeira da tabela uf, foi criada depois, para um processo único
+
+create table municipio (
+	idmunicipio integer not null,
+	nome character varying (30) not null,
+	iduf integer not null,
+
+	constraint pk_mnc_idmunicipio primary key (idmunicipio),
+	constraint uc_mnc_nome unique (nome),
+	constraint fk_mnc_iduf foreign key (iduf) references uf (iduf)
+);
+
+insert into municipio (idmunicipio, nome, iduf) values (1, 'Porto União', 1);
+insert into municipio (idmunicipio, nome, iduf) values (2, 'Canoinhas', 1);
+insert into municipio (idmunicipio, nome, iduf) values (3, 'Porto Vitória', 2);
+insert into municipio (idmunicipio, nome, iduf) values (4, 'General Carneiro', 2);
+insert into municipio (idmunicipio, nome, iduf) values (5, 'São Paulo', 3);
+insert into municipio (idmunicipio, nome, iduf) values (6, 'Rio de Janeiro', 6);
+insert into municipio (idmunicipio, nome, iduf) values (7, 'Uberlândia', 4);
+insert into municipio (idmunicipio, nome, iduf) values (8, 'Porto Alegre', 5);
+insert into municipio (idmunicipio, nome, iduf) values (9, 'União da Vitória', 2);
+
+select * from municipio;
+
+select * from uf;
+
+-- Atualizar tabela cliente
+
+alter table cliente drop municipio;
+alter table cliente drop uf;
+
+alter table cliente add idmunicipio integer;
+alter table cliente add constraint fk_cln_idmunicipio foreign key (idmunicipio) references municipio (idmunicipio);
+
+select * from cliente;
+
+update cliente set idmunicipio = 1 where idcliente in (1, 2, 10, 11);
+update cliente set idmunicipio = 2 where idcliente in (3, 12);
+update cliente set idmunicipio = 3 where idcliente = 4;
+update cliente set idmunicipio = 4 where idcliente = 5;
+update cliente set idmunicipio = 5 where idcliente in (6, 13);
+update cliente set idmunicipio = 6 where idcliente = 7;
+update cliente set idmunicipio = 7 where idcliente = 8;
+update cliente set idmunicipio = 8 where idcliente = 9;
+update cliente set idmunicipio = 9 where idcliente in (14, 15);
