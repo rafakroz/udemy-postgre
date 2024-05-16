@@ -370,7 +370,7 @@ alter table cliente add constraint fk_cln_idprofissao foreign key (idprofissao) 
 
 select * from cliente;
 
--- COm "in ()" é possível informar vários ids de uma só vez
+-- Com "in ()" é possível informar vários ids de uma só vez
 
 update cliente set idprofissao = 1 where idcliente in (1, 9, 10, 12, 15, 17);
 update cliente set idprofissao = 2 where idcliente in (2);
@@ -378,17 +378,64 @@ update cliente set idprofissao = 3 where idcliente in (3);
 update cliente set idprofissao = 4 where idcliente in (4, 5);
 update cliente set idprofissao = 5 where idcliente in (6, 7, 8, 13);
 
--- Estudante -> 1, 9, 10, 12, 15, 17
--- Engenheiro -> 2
--- Pedreiro -> 3
--- Jornalista -> 4, 5
--- Professor -> 6, 7, 8, 13
--- null -> 11, 14
-
 delete from profissao where idprofissao =1;
 
 -- Devido ao fato da profissão estar relacionada na tabela cliente, não possível excluir na tabela profissão
 -- Caso haja interesse em deletar, é preciso desvincular da tabela cliente
 
+
+
+-- SEÇÃO 2 - AULA 22: CHAVES ESTRANGEIRAS 2 ----------------------------------------------------
+
+select * from cliente;
+
+-- Alterar nacionalidade
+-- Exclui coluna
+alter table cliente drop nacionalidade;
+
+-- Adiciona nova coluna
+alter table cliente add idnacionalidade integer;
+
+-- Cria chave estrangeira
+alter table cliente add constraint fk_cln_idnacionalidade foreign key (idnacionalidade) references nacionalidade (idnacionalidade);
+
+select * from nacionalidade;
+
+update cliente set idnacionalidade = 1 where idcliente in (1, 2, 3, 4, 6, 10, 11, 14);
+update cliente set idnacionalidade = 2 where idcliente in (5, 7);
+update cliente set idnacionalidade = 3 where idcliente = 8;
+update cliente set idnacionalidade = 4 where idcliente in (9, 13);
+
+select * from cliente;
+
+-- Alterar complemento
+
+alter table cliente drop complemento;
+
+alter table cliente add idcomplemento integer;
+
+alter table cliente add constraint fk_cln_idcomplemento foreign key (idcomplemento) references complemento (idcomplemento);
+
+update cliente set idcomplemento = 1 where idcliente in (1, 4, 9, 13);
+update cliente set idcomplemento = 2 where idcliente in (2, 3, 7);
+
+-- Alterar Bairro
+
+alter table cliente drop bairro;
+
+alter table cliente add idbairro integer;
+
+alter table cliente add constraint fk_cln_idbairro foreign key (idbairro) references bairro (idbairro);
+
+update cliente set idbairro = 1 where idcliente in (1, 12, 13);
+update cliente set idbairro = 2 where idcliente in (2, 3, 6, 8, 9);
+update cliente set idbairro = 3 where idcliente in (4, 5);
+update cliente set idbairro = 4 where idcliente = 7;
+
+select * from cliente;
+
+
+
+-- SEÇÃO 2 - AULA 23: CHAVES ESTRANGEIRAS 3 ----------------------------------------------------
 
 
