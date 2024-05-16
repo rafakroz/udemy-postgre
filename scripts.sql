@@ -212,7 +212,7 @@ DELETE from cliente where idcliente = 16;
 
 -- SEÇÃO 2 - AULA 18: EXERCÍCIOS ----------------------------------------------------
 
-SELECT * FROM cliente;
+SELECT * FROM cliente order by idcliente asc;
 
 insert into cliente (idcliente, nome, cpf, rg, data_nascimento, genero, profissao, municipio, uf)
 values (16, 'Maicon', '12349596421', '1234', '1965-10-10', 'F', 'Empresário', 'Florianópolis', 'PR');
@@ -251,3 +251,86 @@ delete from cliente where idcliente = 16;
 -- 6. Apague a cliente Sandra
 
 delete from cliente where idcliente = 18;
+
+
+-- SEÇÃO 2 - AULA 20: CRIAÇÃO DE MAIS TRABELAS ----------------------------------------------------
+
+-- O correto é a criação de tabelas específicas para determinadas informações
+
+-- Tabela profissão. Padroniza os dados, de modo que não haja erros de preenchimento.
+
+CREATE TABLE profissao (
+	idprofissao integer not null,
+	nome character varying (30) not null,
+
+	constraint pk_prf_idprofissao primary key (idprofissao),
+	constraint un_prf_nome unique (nome)
+);
+
+insert into profissao (idprofissao, nome) values (1, 'Estudante');
+insert into profissao (idprofissao, nome) values (2, 'Engenheiro');
+insert into profissao (idprofissao, nome) values (3, 'Pedreiro');
+insert into profissao (idprofissao, nome) values (4, 'Jornalista');
+insert into profissao (idprofissao, nome) values (5, 'Professor');
+
+select * from profissao;
+
+-- Tabela acionalidade
+
+create table nacionalidade (
+	idnacionalidade integer not null,
+	nome character varying (30) not null,
+
+	constraint pk_ncn_idnacionalidade primary key (idnacionalidade),
+	constraint un_ncn_nome unique (nome)
+);
+
+select nacionalidade from cliente;
+
+insert into nacionalidade (idnacionalidade, nome) values (1, 'Brasileira');
+insert into nacionalidade (idnacionalidade, nome) values (2, 'Italiana');
+insert into nacionalidade (idnacionalidade, nome) values (3, 'Norte-Americana');
+insert into nacionalidade (idnacionalidade, nome) values (4, 'Alemã');
+
+select * from nacionalidade;
+
+-- Tabela de Complementos
+
+create table complemento (
+	idcomplemento integer not null,
+	nome character varying (30) not null,
+
+	constraint pk_cpl_idcomplemento primary key (idcomplemento),
+	constraint uc_cpl_nome unique (nome)
+);
+
+select complemento from cliente;
+
+insert into complemento (idcomplemento, nome) values (1, 'Casa');
+insert into complemento (idcomplemento, nome) values (2, 'Apartamento');
+
+select * from complemento;
+
+-- Tabela Bairro
+
+create table bairro (
+	idbairro integer not null,
+	nome character varying (30) not null,
+
+	constraint pk_brr_idbairro primary key (idbairro),
+	constraint un_brr_nome unique (nome)
+);
+
+select bairro from cliente;
+
+insert into bairro (idbairro, nome) values (1, 'Cidade Nova');
+insert into bairro (idbairro, nome) values (2, 'Centro');
+insert into bairro (idbairro, nome) values (3, 'São Pedro');
+insert into bairro (idbairro, nome) values (4, 'Santa Rosa');
+
+select * from bairro;
+
+
+
+-- SEÇÃO 2 - AULA 21: CHAVES ESTRANGEIRAS 1 ----------------------------------------------------
+
