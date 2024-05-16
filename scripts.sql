@@ -334,3 +334,61 @@ select * from bairro;
 
 -- SEÇÃO 2 - AULA 21: CHAVES ESTRANGEIRAS 1 ----------------------------------------------------
 
+select * from cliente;
+
+-- O comando "alter table" é utilizado para alterar a estrutura da tabela
+-- Os comandos "uodate" e "delete" são utilizados com os dados
+
+alter table cliente rename column profissao to idprofissao;
+
+select * from cliente;
+-- Algo como: Altere a tabela cliente, renomeie a coluna profissão para idprofissao
+
+alter table cliente alter column idprofissao type integer;
+-- Algo como: Altere a tabela cliente, alterando a coluna idprofissao para o tipo integer
+
+-- Neste ponto, ocorrerá um erro, pois já existem dados e não é possível efetuar a conversão
+-- Será preciso criar uma nova coluna, que armazenará os ids das profissões
+
+alter table cliente drop idprofissao;
+-- Comando "drop" para apagar a coluna idprofissao
+
+select * from cliente;
+
+alter table cliente add idprofissao integer;
+-- Comando "add" para adicionar a coluna idprofissao
+
+/*
+Será criada uma constraint na coluna idprofissao, com uma chave estrangeira do diprofissao da tabela profissao.
+Uma chave estrangeira sempre fará relação com uma chave primária de outra tabela.
+
+foreign key = fk
+*/
+
+alter table cliente add constraint fk_cln_idprofissao foreign key (idprofissao) references profissao (idprofissao);
+-- Algo como: altere a tabela x, adicione a constraint, onde a chave estrangeira é o campo x e relaciona-se com a tabela y, e a chave primária é z.
+
+select * from cliente;
+
+-- COm "in ()" é possível informar vários ids de uma só vez
+
+update cliente set idprofissao = 1 where idcliente in (1, 9, 10, 12, 15, 17);
+update cliente set idprofissao = 2 where idcliente in (2);
+update cliente set idprofissao = 3 where idcliente in (3);
+update cliente set idprofissao = 4 where idcliente in (4, 5);
+update cliente set idprofissao = 5 where idcliente in (6, 7, 8, 13);
+
+-- Estudante -> 1, 9, 10, 12, 15, 17
+-- Engenheiro -> 2
+-- Pedreiro -> 3
+-- Jornalista -> 4, 5
+-- Professor -> 6, 7, 8, 13
+-- null -> 11, 14
+
+delete from profissao where idprofissao =1;
+
+-- Devido ao fato da profissão estar relacionada na tabela cliente, não possível excluir na tabela profissão
+-- Caso haja interesse em deletar, é preciso desvincular da tabela cliente
+
+
+
