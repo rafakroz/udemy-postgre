@@ -652,7 +652,7 @@ insert into pedido (idpedido, data_pedido, valor, idcliente, idtransportadora, i
 	values (11, '2008-04-15', 300, 15, 2, 1);
 
 insert into pedido (idpedido, data_pedido, valor, idcliente, idtransportadora, idvendedor)
-	values (12, '2008-04-20', 500, 15, 2, 5);
+	values (12, '2008-04-20', 300, 15, 2, 5);
 
 insert into pedido (idpedido, data_pedido, valor, idcliente, idtransportadora, idvendedor)
 	values (13, '2008-04-20', 350, 9, 1, 7);
@@ -662,6 +662,173 @@ insert into pedido (idpedido, data_pedido, valor, idcliente, idtransportadora, i
 
 insert into pedido (idpedido, data_pedido, valor, idcliente, idtransportadora, idvendedor)
 	values (15, '2008-04-25', 200, 11, null, 5);
+
+
+
+-- SEÇÃO 2 - AULA 27: TABELA DE PEDIDOS 2 ----------------------------------------------------
+
+-- Criação da tabela pedido_produto
+
+create table pedido_produto (
+	idpedido integer not null,
+	idproduto integer not null,
+	quantidade integer not null,
+	valor_unitario numeric (10,2) not null,
+
+	constraint pk_pdp_idpedidoproduto primary key (idpedido, idproduto),
+	constraint fk_pdp_idpedido foreign key (idpedido) references pedido (idpedido),
+	constraint fk_pdp_idproduto foreign key (idproduto) references produto (idproduto)
+);
+
+-- Inserts na tabela pedido_produto
+
+-- 1
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (1, 1, 1, 800);
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (1, 2, 1, 500);
+
+-- 2
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (2, 2, 1, 500);
+
+-- 3 
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (3, 4, 2, 150);
+
+-- 4 
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (4, 1, 1, 800);
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (4, 3, 1, 200);
+
+-- 5
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (5, 3, 1, 200);
+
+-- 6
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (6, 1, 2, 800);
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (6, 7, 1, 35);
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (6, 5, 1, 200);
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (6, 4, 1, 200);
+
+-- 7
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (7, 1, 1, 800);
+
+-- 8
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (8, 7, 5, 35);
+
+-- 9
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (9, 1, 1, 800);
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (9, 2, 1, 500);
+
+-- 10
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (10, 5, 1, 200);
+
+-- 11
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (11, 5, 1, 200);
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (11, 6, 1, 100);
+
+-- 12
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (12, 2, 1, 500);
+
+-- 13
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (13, 3, 1, 200);
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (13, 4, 1, 150);
+
+-- 14
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (14, 6, 3, 100);
+
+--15
+
+insert into pedido_produto (idpedido, idproduto, quantidade, valor_unitario)
+	values (15, 3, 1, 200);
+
+
+
+-- SEÇÃO 2 - AULA 29: EXEERCÍCIOS - CONSULTA SIMPLES ----------------------------------------------------
+
+-- 1. Somente o nome de todos os vendedores em ordem alfabética.
+
+-- 2. Os produtos que o preço seja maior que R$200,00, em ordem crescente pelo preço.
+
+-- 3. O nome do produto, o preço e o preço reajustado em 10%, ordenado pelo nome do produto.
+
+-- 4. Os municípios do Rio Grande do Sul.
+
+-- 5. Os pedidos feitos entre 10/04/2008 e 25/04/2008 ordenado pelo valor.
+
+-- 6. Os pedidos que o valor esteja entre R$1.000,00 e R$1.500,00.
+
+-- 7. Os pedidos que o valor não esteja entre R$100,00 e R$500,00.
+
+-- 8. Os pedidos do vendedor André ordenado pelo valor em ordem decrescente.
+
+-- 9. Os pedidos do cliente Manoel ordenado pelo valor em ordem crescente.
+
+-- 10. Os pedidos da cliente Jéssica que foram feitos pelo vendedor André.
+
+-- 11. Os pedidos que foram transportados pela transportadora União Transportes.
+
+-- 12. Os pedidos feitos pela vendedora Maria ou pela vendedora Aline.
+
+-- 13. Os clientes que moram em União da Vitória ou Porto União.
+
+-- 14. Os clientes que não moram em União da Vitória e nem em Porto União.
+
+-- 15. Os clientes que não informaram o logradouro.
+
+-- 16. Os clientes que moram em avenidas.
+
+-- 17. Os vendedores que o nome começa com a letra S.
+
+-- 18. Os vendedores que o nome termina com a letra A.
+
+-- 19. Os vendedores que o nome não começa com a letra A.
+
+-- 20. Os municípios que começam com a letra P e são de Santa Catarina.
+
+-- 21. As transportadoras que informaram o endereço.
+
+-- 22. Os itens do pedido 01.
+
+-- 23. Os itens do pedido 06 ou do pedido 10.
 
 
 ------------------------------------------------
