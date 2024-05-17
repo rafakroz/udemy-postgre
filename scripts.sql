@@ -511,3 +511,87 @@ update cliente set idmunicipio = 6 where idcliente = 7;
 update cliente set idmunicipio = 7 where idcliente = 8;
 update cliente set idmunicipio = 8 where idcliente = 9;
 update cliente set idmunicipio = 9 where idcliente in (14, 15);
+
+
+
+-- SEÇÃO 2 - AULA 24: EXERCÍCIO ----------------------------------------------------
+
+-- Criação da tabela Fornecedor
+
+create table fornecedor (
+	idfornecedor integer not null,
+	nome character varying (50) not null,
+
+	constraint pk_fnc_idfornecedor primary key (idfornecedor),
+	constraint uc_fnc_nome unique (nome)
+);
+
+-- Criação da tabela Vendedor
+
+create table vendedor (
+	idvendedor integer not null,
+	nome character varying (50) not null,
+
+	constraint pk_vnd_idvendedor primary key (idvendedor),
+	constraint uc_vnd_nome unique (nome)
+);
+
+-- Criação da tabela Transportadora
+
+create table transportadora (
+	idtransportadora integer not null,
+	idmunicipio integer not null,
+	nome character varying (50) not null,
+	logradouro character varying  (50),
+	numero character varying (10),
+
+	constraint pk_tpt_idtransportadora primary key (idtransportadora),
+	constraint uc_tpt_nome unique (nome),
+	constraint fk_tpt_idmunicipio foreign key (idmunicipio) references municipio (idmunicipio)
+);
+
+-- Criação da tabela Produto
+
+create table produto (
+	idproduto integer not null,
+	idfornecedor integer not null,
+	nome character varying (50) not null,
+	valor numeric (10,2) not null, -- na correção, usou float
+
+	constraint pk_pdt_idproduto primary key (idproduto),
+	constraint fk_pdt_idfornecedor foreign key (idfornecedor) references fornecedor (idfornecedor)	
+);
+
+-- Inserts na tabela Vendedor
+
+insert into vendedor (idvendedor, nome) values (1, 'André');
+insert into vendedor (idvendedor, nome) values (2, 'Alisson');
+insert into vendedor (idvendedor, nome) values (3, 'José');
+insert into vendedor (idvendedor, nome) values (4, 'Ailton');
+insert into vendedor (idvendedor, nome) values (5, 'Maria');
+insert into vendedor (idvendedor, nome) values (6, 'Suelem');
+insert into vendedor (idvendedor, nome) values (7, 'Aline');
+insert into vendedor (idvendedor, nome) values (8, 'Silvana');
+
+-- Inserts na tabela Fornecedor
+
+insert into fornecedor (idfornecedor, nome) values (1, 'Cap. Computadores');
+insert into fornecedor (idfornecedor, nome) values (2, 'AA. Computadores');
+insert into fornecedor (idfornecedor, nome) values (3, 'BB. Máquinas');
+
+-- Inserts na tabela Transportadora
+
+insert into transportadora (idtransportadora, idmunicipio, nome, logradouro, numero) values (1, 9, 'BS. Transportes', 'Rua das Limas', '01');
+insert into transportadora (idtransportadora, idmunicipio, nome, logradouro, numero) values (2, 5, 'União Transportes', null, null);
+
+-- Inserts na tabela Produto
+
+insert into produto (idproduto, idfornecedor, nome, valor) values (1, 1, 'Microcomputador', 800);
+insert into produto (idproduto, idfornecedor, nome, valor) values (2, 1, 'Monitor', 500);
+insert into produto (idproduto, idfornecedor, nome, valor) values (3, 2, 'Placa Mãe', 200);
+insert into produto (idproduto, idfornecedor, nome, valor) values (4, 2, 'HD', 150);
+insert into produto (idproduto, idfornecedor, nome, valor) values (5, 2, 'Placa de Vídeo', 200);
+insert into produto (idproduto, idfornecedor, nome, valor) values (6, 3, 'Memória RAM', 100);
+insert into produto (idproduto, idfornecedor, nome, valor) values (7, 1, 'Gabinete', 35);
+
+------------------------------------------------
