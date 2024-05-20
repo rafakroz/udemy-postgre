@@ -225,29 +225,62 @@ select count(idpedido) from pedido where valor > 1000
 -- AULA 37
 -- 31. A quantidade de microcomputadores vendida.
 
+select * from produto order by idproduto asc
+select * from pedido_produto
+
+select idproduto, sum(quantidade) from pedido_produto group by idproduto having idproduto = 1
+
+-- select sum(quantidade) from pedido_produto where idproduto = 1
+
 
 -- 32. A quantidade de produtos vendida agrupado por produto.
+
+select * from pedido_produto
+
+select idproduto, sum(quantidade) from pedido_produto group by idproduto
 
 
 -- 33. O somatório do valor dos produtos dos pedidos, agrupado por pedido.
 
+select * from pedido_produto
+
+select idpedido, sum(valor_unitario) as "Total Pedido" from pedido_produto group by idpedido order by idpedido
+
 
 -- 34. A quantidade de produtos agrupados por pedido.
+
+select idpedido, sum(quantidade) from pedido_produto group by idpedido order by idpedido asc
 
 
 -- 35. O somatório do valor total de todos os produtos do pedido.
 
+select idpedido, sum(valor_unitario) from pedido_produto group by idpedido order by idpedido asc
+
+-- select sum(valor_unitario) from pedido_produto
+
 
 -- 36. A média dos produtos do pedido 6.
+
+select avg(valor_unitario) from pedido_produto where idpedido = 6
 
 
 -- 37. O valor do maior produto do pedido.
 
+select max(valor_unitario) from pedido_produto
+
 
 -- 38. O valor do menor produto do pedido.
+
+select min(valor_unitario) from pedido_produto
 
 
 -- 39. O somatório da quantidade de produtos por pedido.
 
+select * from pedido_produto
+
+select idpedido, sum(quantidade) from pedido_produto group by idpedido
+
 
 -- 40. O somatório da quantidade de todos os produtos do pedido.
+
+select sum(valor_unitario) from pedido_produto
