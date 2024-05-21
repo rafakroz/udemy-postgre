@@ -56,6 +56,8 @@ left outer join municipio as mnc
 
 select * from produto
 
+--ok
+	
 select
 	prd.nome as "Produto",
 	prd.valor as "Valor",
@@ -69,6 +71,8 @@ left outer join fornecedor as fnc
 
 select * from transportadora
 
+-- ok
+	
 select 
 	trp.nome as "Transportadora",
 	mnc.nome as "Cidade"
@@ -80,6 +84,8 @@ left outer join municipio as mnc
 -- 4. A data do pedido, o valor, o nome do cliente, o nome da transportadora e o nome do vendedor.
 
 select * from pedido
+
+-- ok
 
 SELECT
 	pdd.data_pedido as "Data do Pedido",
@@ -100,6 +106,8 @@ left outer join vendedor as vnd
 
 select * from pedido_produto
 
+-- ok
+
 select 
 	prod.nome as "Produto",
 	pdp.quantidade as "Qtd.",
@@ -115,6 +123,8 @@ select * from cliente
 
 select * from pedido
 
+-- ok
+
 select 
 	cli.nome as "Nome",
 	pdd.data_pedido as "Data do Pedido"
@@ -125,6 +135,8 @@ order by cli.nome
 
 
 -- 7. O nome dos clientes e a data do pedido de todos os clientes, independente se tenham feito pedido (ordenado pelo nome do cliente).
+
+-- ok
 
 select 
 	cli.nome as "Nome",
@@ -155,6 +167,8 @@ group by mnc.nome
 
 select * from produto
 
+-- ok
+
 select
 	forn.nome as "Fornecedor",
 	count(prod.idproduto) as "Qtd. Produtos"
@@ -167,6 +181,8 @@ group by forn.idfornecedor
 -- 10.O nome do cliente e o somatório do valor do pedido (agrupado por cliente).
 
 select * from pedido
+
+-- ok
 
 select 
 	cli.nome as "Cliente",
@@ -182,15 +198,18 @@ group by cli.nome
 select * from vendedor
 select * from pedido
 
+-- ok
+	
 select 
-	ven.nome,
-	sum(ped.valor)
+	ven.nome as "Vendedor",
+	sum(ped.valor) as "Total de Vendas"
 from pedido as ped
 left outer join vendedor as ven
 	on ped.idvendedor = ven.idvendedor
 group by ven.nome
 
---Alternativo
+-- Alternativo com a quantidade de vendas
+	
 select 
 	ven.nome as "Vendedor",
 	count(ped.idpedido) as "Qtd. Vendas",
@@ -202,6 +221,8 @@ group by ven.nome
 
 
 -- 12.O nome da transportadora e o somatório do valor do pedido (agrupado por transportadora).
+
+-- ok
 
 select * from pedido
 
@@ -219,6 +240,8 @@ order by "Total"
 
 select * from pedido
 
+-- ok
+
 select 
 	cli.nome as "Nome Cliente",
 	count(ped.idpedido) as "Qtd. Pedidos"
@@ -231,18 +254,42 @@ group by cli.nome
 
 select * from pedido_produto
 
+-- ok
+
 select 
 	prod.nome as "Produto",
 	sum(pprod.quantidade) as "Qtd. Vendida"
 from pedido_produto as pprod
-left outer join produto prod
+left outer join produto as prod
 	on pprod.idproduto = prod.idproduto
 group by prod.nome
 
 
 -- 15.A data do pedido e o somatório do valor dos produtos do pedido (agrupado pela data do pedido).
 
-select * from pedido
+select * from pedido_produto
+
+-- Correção
+
+select 
+	pdd.data_pedido as "Data Pedido",
+	sum(pdp.valor_unitario) as "Total"
+from pedido_produto as pdp
+left outer join pedido as pdd
+	on pdp.idpedido = pdd.idpedido
+group by pdd.data_pedido
 
 
 -- 16.A data do pedido e a quantidade de produtos do pedido (agrupado pela data do pedido).
+
+-- ok
+
+select
+	ped.data_pedido as "Data do pedido",
+	sum(pdp.quantidade) as "Quantidade"
+from pedido_produto as pdp
+left outer join pedido as ped
+	on pdp.idpedido = ped.idpedido
+group by ped.data_pedido
+
+
