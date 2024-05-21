@@ -134,6 +134,7 @@ left outer join pedido as pdd
 	on cli.idcliente = pdd.idcliente
 order by cli.nome
 
+	
 -- 8. O nome da cidade e a quantidade de clientes que moram naquela cidade.
 
 select * from cliente
@@ -152,16 +153,96 @@ group by mnc.nome
 
 -- 9. O nome do fornecedor e a quantidade de produtos de cada fornecedor.
 
+select * from produto
+
+select
+	forn.nome as "Fornecedor",
+	count(prod.idproduto) as "Qtd. Produtos"
+from produto as prod
+left outer join fornecedor as forn
+	on prod.idfornecedor = forn.idfornecedor
+group by forn.idfornecedor
+	
+
 -- 10.O nome do cliente e o somatório do valor do pedido (agrupado por cliente).
+
+select * from pedido
+
+select 
+	cli.nome as "Cliente",
+	sum(ped.valor) as "Total Comprado"
+from pedido as ped
+left outer join cliente as cli
+	on ped.idcliente = cli.idcliente
+group by cli.nome
+
 
 -- 11.O nome do vendedor e o somatório do valor do pedido (agrupado por vendedor).
 
+select * from vendedor
+select * from pedido
+
+select 
+	ven.nome,
+	sum(ped.valor)
+from pedido as ped
+left outer join vendedor as ven
+	on ped.idvendedor = ven.idvendedor
+group by ven.nome
+
+--Alternativo
+select 
+	ven.nome as "Vendedor",
+	count(ped.idpedido) as "Qtd. Vendas",
+	sum(ped.valor) as "Total de Vendas"
+from pedido as ped
+left outer join vendedor as ven
+	on ped.idvendedor = ven.idvendedor
+group by ven.nome
+
+
 -- 12.O nome da transportadora e o somatório do valor do pedido (agrupado por transportadora).
+
+select * from pedido
+
+select 
+	transp.nome as "Transportadora",
+	sum(ped.valor) as "Total"
+from pedido as ped
+left outer join transportadora as transp
+	on ped.idtransportadora = transp.idtransportadora
+group by transp.nome
+order by "Total"
+
 
 -- 13.O nome do cliente e a quantidade de pedidos de cada um (agrupado por cliente).
 
+select * from pedido
+
+select 
+	cli.nome as "Nome Cliente",
+	count(ped.idpedido) as "Qtd. Pedidos"
+from pedido as ped
+left outer join cliente as cli
+	on ped.idcliente = cli.idcliente
+group by cli.nome
+
 -- 14.O nome do produto e a quantidade vendida (agrupado por produto).
 
+select * from pedido_produto
+
+select 
+	prod.nome as "Produto",
+	sum(pprod.quantidade) as "Qtd. Vendida"
+from pedido_produto as pprod
+left outer join produto prod
+	on pprod.idproduto = prod.idproduto
+group by prod.nome
+
+
 -- 15.A data do pedido e o somatório do valor dos produtos do pedido (agrupado pela data do pedido).
+
+select * from pedido
+
 
 -- 16.A data do pedido e a quantidade de produtos do pedido (agrupado pela data do pedido).
