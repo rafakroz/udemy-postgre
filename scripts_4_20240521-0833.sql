@@ -30,3 +30,61 @@
 	from uf
 
 */
+
+
+-- SEÇÃO 2 - AULA 44: EXERCÍCIOS COMANDOS ADICIONAIS ----------------------------------------------------
+
+
+-- 1. O nome do cliente e somente o mês de nascimento. Caso a data de nascimento não esteja preenchida mostrar a mensagem “Não informado”.
+
+-- Correção
+
+select
+	nome as "Nome",
+	coalesce(extract(month from data_nascimento), 0) as "Data de Nascimento"
+from cliente
+
+
+-- 2. O nome do cliente e somente o nome do mês de nascimento (Janeiro, Fevereiro etc). Caso a data de nascimento não esteja preenchida mostrar a mensagem “Não informado”.
+
+-- Correção
+
+select
+	nome,
+	case extract(month from data_nascimento)
+		when 1 then 'Janeiro'
+		when 2 then 'Fevereiro'
+		when 3 then 'Março'
+		when 4 then 'Abril'
+		when 5 then 'Maio'
+		when 6 then 'Junho'
+		when 7 then 'Julho'
+		when 8 then 'Agosto'
+		when 9 then 'Setembro'
+		when 10 then 'Outubro'
+		when 11 then 'Novembro'
+		when 12 then 'Dezembro'
+	else 'Não informado'
+	end as "Mês"
+from cliente
+
+
+-- 3. O nome do cliente e somente o ano de nascimento. Caso a data de nascimento não esteja preenchida mostrar a mensagem “Não informado”.
+
+--
+
+-- 4. O caractere 5 até o caractere 10 de todos os municípios.
+
+--
+
+-- 5. O nome de todos os municípios em letras maiúsculas.
+
+--
+
+-- 6. O nome do cliente e o gênero. Caso seja M mostrar “Masculino”, senão mostrar “Feminino”.
+
+--
+
+-- 7. O nome do produto e o valor. Caso o valor seja maior do que R$ 500,00 mostrar a mensagem “Acima de 500”, caso contrário, mostrar a mensagem “Abaixo de 500”.
+
+--
