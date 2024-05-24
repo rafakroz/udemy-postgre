@@ -65,26 +65,65 @@ select
 		when 11 then 'Novembro'
 		when 12 then 'Dezembro'
 	else 'Não informado'
-	end as "Mês"
+	end as "Mês de Nascimento"
 from cliente
 
 
 -- 3. O nome do cliente e somente o ano de nascimento. Caso a data de nascimento não esteja preenchida mostrar a mensagem “Não informado”.
 
---
+-- Correção
+
+select
+	nome,
+	coalesce (extract(year from data_nascimento), 0)
+FROM
+	cliente
 
 -- 4. O caractere 5 até o caractere 10 de todos os municípios.
 
---
+-- Correção
+ 
+SELECT
+	substring(nome from 5 for 5) -- exibir 5 caracteres a partir do quinto carecter
+from
+	municipio
 
 -- 5. O nome de todos os municípios em letras maiúsculas.
 
---
+-- Ok
+
+SELECT
+	nome, upper (nome)
+from
+	municipio
 
 -- 6. O nome do cliente e o gênero. Caso seja M mostrar “Masculino”, senão mostrar “Feminino”.
 
---
+-- Ok
+
+select * from cliente
+
+select
+	nome,
+	case (genero)
+		when 'M' then 'Masculino'
+	else 'Feminino'
+	end as "Gênero"
+from 
+	cliente
 
 -- 7. O nome do produto e o valor. Caso o valor seja maior do que R$ 500,00 mostrar a mensagem “Acima de 500”, caso contrário, mostrar a mensagem “Abaixo de 500”.
 
---
+-- 
+
+select * from produto
+
+SELECT
+	nome,
+	valor,
+	case
+		when valor >= 500 then 'Maior ou Igual a 500'
+	else 'Abaixo de 500'
+	end as "Faixa"
+FROM
+	produto
